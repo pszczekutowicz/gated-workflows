@@ -25,6 +25,7 @@ jobs:
 
   service-gate:
     needs: init
+    if: ${{ inputs.service != '' }}
     runs-on: ubuntu-latest
     environment: "{{ input.service }}"
     steps:
@@ -34,6 +35,7 @@ jobs:
 
   environment-gate:
     needs: init
+    if: ${{ inputs.environment != '' }}
     runs-on: ubuntu-latest
     environment: "{{ input.environment }}"
     steps:
