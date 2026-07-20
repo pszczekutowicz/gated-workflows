@@ -6,11 +6,19 @@ on:
       service:
         description: "Service name"
         required: true
-        type: string
+        type: choice
+        options:
+          - users
+          - orders
+          - cart
       environment:
         description: "Environment name"
         required: true
-        type: string
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
 
 jobs:
   init:
