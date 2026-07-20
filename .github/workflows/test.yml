@@ -1,0 +1,53 @@
+name: TEST Gated Deploy Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: "Service name"
+        required: true
+        type: string
+      environment:
+        description: "Environment name"
+        required: true
+        type: string
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup
+        run: |
+          echo "Initializing workflow..."
+
+  service-gate:
+    needs: init
+    runs-on: ubuntu-latest
+    environment: "{{ input.service }}"
+    steps:
+      - name: Check service readiness
+        run: |
+          echo "Service gate passed."
+
+  environment-gate:
+    needs: init
+    runs-on: ubuntu-latest
+    environment: "{{ input.environment }}"
+    steps:
+      - name: Check environment readiness
+        run: |
+          echo "Environment gate passed."
+
+  deploy:
+    needs: [service-gate, environment-gate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: |
+          echo "Deployment complete."
