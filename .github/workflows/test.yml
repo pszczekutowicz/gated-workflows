@@ -27,7 +27,7 @@ jobs:
     needs: init
     if: ${{ inputs.service != '' }}
     runs-on: ubuntu-latest
-    environment: "{{ input.service }}"
+    environment: ${{ inputs.service }}
     steps:
       - name: Check service readiness
         run: |
@@ -37,7 +37,7 @@ jobs:
     needs: init
     if: ${{ inputs.environment != '' }}
     runs-on: ubuntu-latest
-    environment: "{{ input.environment }}"
+    environment: ${{ inputs.environment }}
     steps:
       - name: Check environment readiness
         run: |
